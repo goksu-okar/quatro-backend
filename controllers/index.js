@@ -112,5 +112,11 @@ module.exports = {
     db.findOrders()
       .then((result) => res.send(result))
       .catch(err => res.send(err))
+  },
+  removeOrder: (req, res) => {
+    const _id = req.body._id.valueOf();
+    db.deleteOrder({ _id })
+      .then((result) => {res.end()})
+      .catch((err) => {res.send(err)})
   }
 };

@@ -17,6 +17,8 @@ router.get('/customers/id/:_id', controller.getCustomerById);
 
 router.post('/orders', controller.createOrEditOrder);
 
+router.delete('/orders', controller.removeOrder);
+
 router.get('/orders', controller.getAllOrders);
 
 router.get('/orders/:orderType', controller.getOrdersByType);

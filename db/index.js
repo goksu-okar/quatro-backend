@@ -82,9 +82,10 @@ module.exports = {
   editCustomer: (filter, update) => (Customer.findOneAndUpdate(filter, update, {new: true})),
   deleteCustomer: (filter) => (Customer.deleteOne(filter)),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
-  findOrders: (obj) => (Order.find(obj).sort({createdAt: -1})),
+  findOrders: (obj) => (Order.find(obj).sort({createdAt: -1}).limit(100)),
   createOrder: (info) => (Order.create(info)),
   editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
+  deleteOrder: (filter) => (Order.deleteOne(filter)),
   incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
   decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
 }
