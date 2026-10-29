@@ -82,7 +82,13 @@ module.exports = {
   editCustomer: (filter, update) => (Customer.findOneAndUpdate(filter, update, {new: true})),
   deleteCustomer: (filter) => (Customer.deleteOne(filter)),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
-  findOrders: (obj) => (Order.find(obj).sort({createdAt: -1}).limit(100)),
+  findOrders: (obj = {}, options = {}) => {
+    let query = Order.find(obj).sort({createdAt: -1});
+    if (options.skip) query = query.skip(options.skip);
+    if (options.limit) query = query.limit(options.limit);
+    return query;
+  },
+  countOrders: (obj = {}) => (Order.countDocuments(obj)),
   createOrder: (info) => (Order.create(info)),
   editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
   deleteOrder: (filter) => (Order.deleteOne(filter)),

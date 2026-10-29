@@ -109,9 +109,28 @@ module.exports = {
       })
   },
   getAllOrders: (req, res) => {
-    db.findOrders()
-      .then((result) => res.send(result))
-      .catch(err => res.send(err))
+    const { page, limit, type, all } = req.query;
+
+    if (all) {
+      db.findOrders()
+        .then((result) => res.send(result))
+        .catch(err => res.send(err));
+      return;
+    }
+
+    const pageNum = parseInt(page, 10) || 1;
+    const pageSize = parseInt(limit, 10) || 100;
+    const filter = (type && type !== 'all') ? { $or: [{ orderType: type }, { customerType: type }] } : {};
+
+    Promise.all([
+      db.findOrders(filter, { skip: (pageNum - 1) * pageSize, limit: pageSize }),
+      db.countOrders(filter),
+    ])
+      .then(([orders, total]) => {
+        res.set('X-Total-Count', total);
+        res.send(orders);
+      })
+      .catch(err => res.send(err));
   },
   removeOrder: (req, res) => {
     const _id = req.body._id.valueOf();
