@@ -92,7 +92,7 @@ module.exports = {
   createOrder: (info) => (Order.create(info)),
   editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
   deleteOrder: (filter) => (Order.deleteOne(filter)),
-  incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
+  incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after', upsert: true})),
   decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
 }
 
