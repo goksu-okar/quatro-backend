@@ -69,6 +69,7 @@ Deploy the backend first, then the frontend straight after. The site doesn't wor
 On the server:
 
 ```bash
+node -v                             # must be 20.19 or newer (Mongoose 9)
 cd ~/quatro-backend                 # wherever the app lives
 git remote -v                       # must be goksu-okar/quatro-backend; if not:
 git remote set-url origin https://github.com/goksu-okar/quatro-backend.git
